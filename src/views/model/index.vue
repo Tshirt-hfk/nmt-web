@@ -30,7 +30,7 @@
         align="center"
         sortable
       ></el-table-column>
-      <el-table-column prop="intro" label="介绍"></el-table-column>
+      <el-table-column prop="desc" label="介绍"></el-table-column>
       <el-table-column align="center" label="操作" width="160">
         <template slot-scope="scope">
           <el-button
@@ -47,7 +47,7 @@
 </template>
 
 <script>
-import { getList } from "@/api/table";
+import { getAllModel } from "@/api/model";
 
 export default {
   filters: {
@@ -63,29 +63,6 @@ export default {
   data() {
     return {
       list: [
-        {
-          id: 1,
-          name: "模型1",
-          version: "0.1",
-          upload_user: "k",
-          intro: "上海市普陀区金沙江路 1518 弄",
-        },
-        {
-          id: 2,
-          name: "模型2",
-          version: "0.2",
-          upload_user: "j",
-          intro: "上海市普陀区金沙江路 1518 弄",
-          children: [
-            {
-              id: 3,
-              name: "模型3",
-              version: "0.2.0",
-              upload_user: "k",
-              intro: "上海市普陀区金沙江路 1518 弄",
-            },
-          ],
-        },
       ],
       listLoading: true,
     };
@@ -97,10 +74,11 @@ export default {
     fetchData() {
       this.listLoading = true;
       this.listLoading = false;
-      // getList().then(response => {
-      //   this.list = response.data.items
-      //   this.listLoading = false
-      // })
+      console.log(this.$route.name)
+      getAllModel({kind: this.$route.name}).then(response => {
+        this.list = response.data.items
+        this.listLoading = false
+      })
     },
   },
 };

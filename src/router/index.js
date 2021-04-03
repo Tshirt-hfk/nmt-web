@@ -49,7 +49,7 @@ export const constantRoutes = [
     redirect: '/dashboard',
     children: [{
       path: 'dashboard',
-      name: 'Dashboard',
+      name: 'dashboard',
       component: () => import('@/views/dashboard/index'),
       meta: { title: '主页', icon: 'dashboard' }
     }]
@@ -69,14 +69,14 @@ export const constantRoutes = [
         meta: { title: '上传模型', icon: 'form' }
       },
       {
-        path: 'translation',
-        name: 'Translation',
+        path: 'trans',
+        name: 'trans',
         component: () => import('@/views/model/index'),
         meta: { title: '翻译模型', icon: 'table' }
       },
       {
         path: 'preproccess',
-        name: 'Preproccess',
+        name: 'pre',
         component: () => import('@/views/model/index'),
         meta: { title: '预处理模型', icon: 'table' }
       },
@@ -91,13 +91,13 @@ export const constantRoutes = [
     children: [
       {
         path: 'example',
-        name: 'Example',
+        name: 'example',
         component: () => import('@/views/combination/example/index'),
         meta: { title: '组合样例', icon: 'table' }
       },
       {
         path: 'new',
-        name: 'New',
+        name: 'new',
         component: () => import('@/views/combination/new/index'),
         meta: { title: '新建样例', icon: 'table' }
       },
@@ -110,7 +110,7 @@ export const constantRoutes = [
     children: [
       {
         path: 'index',
-        name: 'Index',
+        name: 'index',
         component: () => import('@/views/form/index'),
         meta: { title: '用户中心', icon: 'form' }
       }

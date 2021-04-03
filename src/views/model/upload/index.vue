@@ -4,6 +4,9 @@
       <el-form-item label="模型名称">
         <el-input v-model="form.name" />
       </el-form-item>
+      <el-form-item label="模型版本">
+        <el-input v-model="form.version" />
+      </el-form-item>
       <el-form-item label="模型类型">
         <el-select v-model="form.kind" placeholder="请选择模型类型">
           <el-option label="翻译模型" value="trans" />
@@ -14,7 +17,7 @@
         <el-input v-model="form.desc" type="textarea" />
       </el-form-item>
       <el-form-item label="模型">
-        <!-- <el-upload
+        <el-upload
           class="upload-demo"
           action="customize"
           :limit="1"
@@ -24,9 +27,9 @@
         >
           <el-button size="small" type="primary">点击上传</el-button>
           <div slot="tip" class="el-upload__tip">只能上传压缩文件</div>
-        </el-upload> -->
-        
-        <el-upload
+        </el-upload>
+
+        <!-- <el-upload
           :http-request="chunkedUpload"
           :ref="chunkedUpload"
           :action="uploadUrl"
@@ -35,7 +38,7 @@
           :before-remove="beforeRemove"
           name="file"
         >
-        </el-upload>
+        </el-upload> -->
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="onSubmit">提交</el-button>
@@ -45,7 +48,7 @@
 </template>
 
 <script>
-import { chunkedUpload } from "@/utils/chunked-upload";
+// import { chunkedUpload } from "@/utils/chunked-upload";
 
 import { uploadModel, addModel } from "@/api/model";
 
@@ -54,9 +57,10 @@ export default {
     return {
       form: {
         name: "",
+        version: "",
         kind: "",
         desc: "",
-        file: "",
+        path: "",
       },
     };
   },
@@ -69,7 +73,7 @@ export default {
       formData.append("file", _file);
 
       uploadModel(formData).then((response) => {
-        this.form.file = response.data.file_path;
+        this.form.path = response.data.file_path;
       });
     },
     handleRemove() {
@@ -81,6 +85,7 @@ export default {
     onSubmit() {
       addModel(this.form).then((response) => {
         this.$message(response.message);
+        this.$router.push({ name: this.form.kind })
       });
     },
   },

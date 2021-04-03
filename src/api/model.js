@@ -15,3 +15,11 @@ export function addModel(data) {
       data
     })
   }
+
+  export function getAllModel(data) {
+    return request({
+      url: '/model/all',
+      method: 'post',
+      data
+    })
+  }
