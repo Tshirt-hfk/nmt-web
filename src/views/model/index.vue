@@ -73,8 +73,6 @@ export default {
   methods: {
     fetchData() {
       this.listLoading = true;
-      this.listLoading = false;
-      console.log(this.$route.name)
       getAllModel({kind: this.$route.name}).then(response => {
         this.list = response.data.items
         this.listLoading = false

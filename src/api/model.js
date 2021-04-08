@@ -1,5 +1,13 @@
 import request from '@/utils/request'
 
+export function searchModel(data) {
+  return request({
+    url: '/model/search',
+    method: 'post',
+    data
+  })
+}
+
 export function uploadModel(data) {
   return request({
     url: '/model/upload',

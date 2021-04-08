@@ -2,41 +2,58 @@
   <div class="app-container">
     <el-table
       v-loading="listLoading"
-      :data="list"
       element-loading-text="Loading"
+      :data="list"
+      style="width: 100%; margin-bottom: 20px"
+      row-key="id"
       border
-      fit
-      highlight-current-row
+      :tree-props="{ children: 'children', hasChildren: 'hasChildren' }"
     >
-      <el-table-column align="center" label="ID" width="95">
+      <el-table-column
+        prop="name"
+        label="名称"
+        width="110"
+        align="center"
+        sortable
+      ></el-table-column>
+      <el-table-column
+        prop="author"
+        label="创建者"
+        width="110"
+        align="center"
+        sortable
+      ></el-table-column>
+      <el-table-column
+        prop="created_date"
+        label="创建日期"
+        width="110"
+        align="center"
+        sortable
+      ></el-table-column>
+      <el-table-column
+        prop="pre_model"
+        label="预处理模型"
+        width="140"
+        align="center"
+        sortable
+      ></el-table-column>
+      <el-table-column
+        prop="trans_model"
+        label="翻译模型"
+        width="140"
+        align="center"
+        sortable
+      ></el-table-column>
+      <el-table-column prop="desc" label="介绍"></el-table-column>
+      <el-table-column align="center" label="操作" width="160">
         <template slot-scope="scope">
-          {{ scope.$index }}
-        </template>
-      </el-table-column>
-      <el-table-column label="Title">
-        <template slot-scope="scope">
-          {{ scope.row.title }}
-        </template>
-      </el-table-column>
-      <el-table-column label="Author" width="110" align="center">
-        <template slot-scope="scope">
-          <span>{{ scope.row.author }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="Pageviews" width="110" align="center">
-        <template slot-scope="scope">
-          {{ scope.row.pageviews }}
-        </template>
-      </el-table-column>
-      <el-table-column class-name="status-col" label="Status" width="110" align="center">
-        <template slot-scope="scope">
-          <el-tag :type="scope.row.status | statusFilter">{{ scope.row.status }}</el-tag>
-        </template>
-      </el-table-column>
-      <el-table-column align="center" prop="created_at" label="Display_time" width="200">
-        <template slot-scope="scope">
-          <i class="el-icon-time" />
-          <span>{{ scope.row.display_time }}</span>
+          <el-button
+            @click.native.prevent="deleteRow(scope.$index, tableData)"
+            type="text"
+            size="small"
+          >
+            下载
+          </el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -44,36 +61,26 @@
 </template>
 
 <script>
-import { getList } from '@/api/table'
+import { getAllExample } from "@/api/example";
 
 export default {
-  filters: {
-    statusFilter(status) {
-      const statusMap = {
-        published: 'success',
-        draft: 'gray',
-        deleted: 'danger'
-      }
-      return statusMap[status]
-    }
-  },
   data() {
     return {
-      list: null,
-      listLoading: true
-    }
+      list: [],
+      listLoading: true,
+    };
   },
   created() {
-    this.fetchData()
+    this.fetchData();
   },
   methods: {
     fetchData() {
-      this.listLoading = true
-      getList().then(response => {
-        this.list = response.data.items
-        this.listLoading = false
-      })
-    }
-  }
-}
+      this.listLoading = true;
+      getAllExample().then((response) => {
+        this.list = response.data.items;
+        this.listLoading = false;
+      });
+    },
+  },
+};
 </script>

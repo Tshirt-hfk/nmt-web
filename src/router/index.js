@@ -64,7 +64,7 @@ export const constantRoutes = [
     children: [
       {
         path: 'all',
-        name: 'All',
+        name: 'all',
         component: () => import('@/views/model/upload/index'),
         meta: { title: '上传模型', icon: 'form' }
       },
@@ -86,7 +86,7 @@ export const constantRoutes = [
     path: '/combination',
     component: Layout,
     redirect: '/combination/example',
-    name: 'example',
+    name: 'combination',
     meta: { title: '模型组合', icon: 'el-icon-s-help' },
     children: [
       {
@@ -96,9 +96,9 @@ export const constantRoutes = [
         meta: { title: '组合样例', icon: 'table' }
       },
       {
-        path: 'new',
-        name: 'new',
-        component: () => import('@/views/combination/new/index'),
+        path: 'create',
+        name: 'create',
+        component: () => import('@/views/combination/create/index'),
         meta: { title: '新建样例', icon: 'table' }
       },
     ]
