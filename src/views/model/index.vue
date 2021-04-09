@@ -12,21 +12,28 @@
       <el-table-column
         prop="name"
         label="名称"
-        width="110"
+        width="100"
         align="center"
         sortable
       ></el-table-column>
       <el-table-column
         prop="version"
         label="版本"
-        width="110"
+        width="80"
         align="center"
         sortable
       ></el-table-column>
       <el-table-column
         prop="upload_user"
         label="上传者"
-        width="110"
+        width="100"
+        align="center"
+        sortable
+      ></el-table-column>
+      <el-table-column
+        prop="updated_date"
+        label="上传日期"
+        width="140"
         align="center"
         sortable
       ></el-table-column>

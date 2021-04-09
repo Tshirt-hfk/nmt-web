@@ -7,7 +7,6 @@
       <el-form-item label="预处理模型">
         <el-select
           v-model="form.pre_model"
-          multiple
           filterable
           remote
           reserve-keyword
@@ -19,15 +18,14 @@
             v-for="item in pre_options"
             :key="item.value"
             :label="item.label"
-            :value="item.label"
+            :value="item.value"
           >
           </el-option>
         </el-select>
       </el-form-item>
       <el-form-item label="翻译模型">
         <el-select
-          v-model="form.trans_model"
-          multiple
+          v-model="form.trans_model" 
           filterable
           remote
           reserve-keyword
@@ -39,7 +37,7 @@
             v-for="item in trans_options"
             :key="item.value"
             :label="item.label"
-            :value="item.label"
+            :value="item.value"
           >
           </el-option>
         </el-select>
@@ -48,8 +46,7 @@
         <el-input v-model="form.desc" type="textarea" />
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="onSubmit">Create</el-button>
-        <el-button @click="onCancel">Cancel</el-button>
+        <el-button type="primary" @click="onSubmit">提交</el-button>
       </el-form-item>
     </el-form>
   </div>
@@ -57,6 +54,7 @@
 
 <script>
 import { searchModel } from "@/api/model";
+import { createExample } from "@/api/example";
 
 export default {
   data() {
@@ -67,21 +65,20 @@ export default {
       trans_options: [],
       form: {
         name: "",
-        pre_model: -1,
-        trans_model: -1,
+        pre_model: null,
+        trans_model: null,
         desc: "",
       },
     };
   },
   methods: {
     onSubmit() {
+      console.log(this.form)
+      createExample(this.form).then((response) => {
+        this.$message(response.message);
+        this.$router.push({ name: "example" })
+      })
       this.$message("submit!");
-    },
-    onCancel() {
-      this.$message({
-        message: "cancel!",
-        type: "warning",
-      });
     },
 
     pre_remoteMethod(query) {

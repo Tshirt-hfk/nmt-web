@@ -17,7 +17,7 @@
         sortable
       ></el-table-column>
       <el-table-column
-        prop="author"
+        prop="author_name"
         label="创建者"
         width="110"
         align="center"
@@ -26,7 +26,7 @@
       <el-table-column
         prop="created_date"
         label="创建日期"
-        width="110"
+        width="140"
         align="center"
         sortable
       ></el-table-column>
