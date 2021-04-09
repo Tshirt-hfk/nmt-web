@@ -15,3 +15,12 @@ export function getAllExample(data) {
     data
   })
 }
+
+export function downloadExample(data) {
+  return request({
+    url: '/example/download',
+    method: 'post',
+    responseType: 'blob',
+    data
+  })
+}

@@ -93,7 +93,6 @@ export default {
     },
     downloadData(id, name, version, path) {
       downloadModel({ id: id }).then((file) => {
-        console.log(typeof(file))
         const blob = new Blob([file]);
         const fileName = name + "-V" + version + "." + path.split(".").pop();
         const link = document.createElement("a");

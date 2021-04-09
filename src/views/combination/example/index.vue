@@ -48,7 +48,12 @@
       <el-table-column align="center" label="操作" width="160">
         <template slot-scope="scope">
           <el-button
-            @click.native.prevent="deleteRow(scope.$index, tableData)"
+            @click.native.prevent="
+              downloadData(
+                scope.row.id,
+                scope.row.name
+              )
+            "
             type="text"
             size="small"
           >
@@ -61,7 +66,7 @@
 </template>
 
 <script>
-import { getAllExample } from "@/api/example";
+import { getAllExample, downloadExample } from "@/api/example";
 
 export default {
   data() {
@@ -79,6 +84,20 @@ export default {
       getAllExample().then((response) => {
         this.list = response.data.items;
         this.listLoading = false;
+      });
+    },
+    downloadData(id, name) {
+      downloadExample({ id: id }).then((file) => {
+        const blob = new Blob([file]);
+        const fileName = name + ".zip";
+        const link = document.createElement("a");
+        link.download = fileName;
+        link.style.display = "none";
+        link.href = URL.createObjectURL(blob);
+        document.body.appendChild(link);
+        link.click();
+        URL.revokeObjectURL(link.href);
+        document.body.removeChild(link);
       });
     },
   },
