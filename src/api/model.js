@@ -16,6 +16,15 @@ export function uploadModel(data) {
   })
 }
 
+export function downloadModel(data) {
+  return request({
+    url: '/model/download',
+    method: 'post',
+    responseType: 'blob',
+    data
+  })
+}
+
 export function addModel(data) {
     return request({
       url: '/model/add',

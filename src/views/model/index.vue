@@ -41,7 +41,14 @@
       <el-table-column align="center" label="操作" width="160">
         <template slot-scope="scope">
           <el-button
-            @click.native.prevent="deleteRow(scope.$index, tableData)"
+            @click.native.prevent="
+              downloadData(
+                scope.row.id,
+                scope.row.name,
+                scope.row.vesrion,
+                scope.row.path
+              )
+            "
             type="text"
             size="small"
           >
@@ -54,7 +61,7 @@
 </template>
 
 <script>
-import { getAllModel } from "@/api/model";
+import { getAllModel, downloadModel } from "@/api/model";
 
 export default {
   filters: {
@@ -69,8 +76,7 @@ export default {
   },
   data() {
     return {
-      list: [
-      ],
+      list: [],
       listLoading: true,
     };
   },
@@ -80,10 +86,25 @@ export default {
   methods: {
     fetchData() {
       this.listLoading = true;
-      getAllModel({kind: this.$route.name}).then(response => {
-        this.list = response.data.items
-        this.listLoading = false
-      })
+      getAllModel({ kind: this.$route.name }).then((response) => {
+        this.list = response.data.items;
+        this.listLoading = false;
+      });
+    },
+    downloadData(id, name, version, path) {
+      downloadModel({ id: id }).then((file) => {
+        console.log(typeof(file))
+        const blob = new Blob([file]);
+        const fileName = name + "-V" + version + "." + path.split(".").pop();
+        const link = document.createElement("a");
+        link.download = fileName;
+        link.style.display = "none";
+        link.href = URL.createObjectURL(blob);
+        document.body.appendChild(link);
+        link.click();
+        URL.revokeObjectURL(link.href);
+        document.body.removeChild(link);
+      });
     },
   },
 };
