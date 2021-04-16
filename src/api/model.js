@@ -26,17 +26,17 @@ export function downloadModel(data) {
 }
 
 export function addModel(data) {
-    return request({
-      url: '/model/add',
-      method: 'post',
-      data
-    })
-  }
+  return request({
+    url: '/model/add',
+    method: 'post',
+    data
+  })
+}
 
-  export function getAllModel(data) {
-    return request({
-      url: '/model/all',
-      method: 'post',
-      data
-    })
-  }
+export function getAllModel(data) {
+  return request({
+    url: '/model/all',
+    method: 'post',
+    data
+  })
+}

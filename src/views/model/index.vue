@@ -2,7 +2,7 @@
   <div class="app-container">
     <el-table
       v-loading="listLoading"
-      element-loading-text="Loading"
+      element-loading-text="加载中"
       :data="list"
       style="width: 100%; margin-bottom: 20px"
       row-key="id"
@@ -43,10 +43,7 @@
           <el-button
             @click.native.prevent="
               downloadData(
-                scope.row.id,
-                scope.row.name,
-                scope.row.vesrion,
-                scope.row.path
+                scope.row,
               )
             "
             type="text"
@@ -91,10 +88,10 @@ export default {
         this.listLoading = false;
       });
     },
-    downloadData(id, name, version, path) {
-      downloadModel({ id: id }).then((file) => {
+    downloadData(item) {
+      downloadModel({ id: item.id }).then((file) => {
         const blob = new Blob([file]);
-        const fileName = name + "-V" + version + "." + path.split(".").pop();
+        const fileName = item.name + "-V" + item.version + "." + item.path.split(".").pop();
         const link = document.createElement("a");
         link.download = fileName;
         link.style.display = "none";
