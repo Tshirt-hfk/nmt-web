@@ -10,7 +10,7 @@
     >
       <el-table-column prop="date" label="日期" sortable width="180">
       </el-table-column>
-      <el-table-column prop="user" label="姓名" sortable width="180">
+      <el-table-column prop="user" label="用户" sortable width="180">
       </el-table-column>
       <el-table-column prop="operation" label="操作" :formatter="formatter">
       </el-table-column>
