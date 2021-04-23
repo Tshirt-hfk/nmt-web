@@ -28,17 +28,6 @@
           <el-button size="small" type="primary">点击上传</el-button>
           <div slot="tip" class="el-upload__tip">只能上传压缩文件</div>
         </el-upload>
-
-        <!-- <el-upload
-          :http-request="chunkedUpload"
-          :ref="chunkedUpload"
-          :action="uploadUrl"
-          :data="uploadData"
-          :on-error="onError"
-          :before-remove="beforeRemove"
-          name="file"
-        >
-        </el-upload> -->
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="onSubmit">提交</el-button>
@@ -48,7 +37,6 @@
 </template>
 
 <script>
-// import { chunkedUpload } from "@/utils/chunked-upload";
 
 import { uploadModel, addModel } from "@/api/model";
 
