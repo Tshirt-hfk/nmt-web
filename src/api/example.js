@@ -21,6 +21,10 @@ export function downloadExample(data) {
     url: '/example/download',
     method: 'post',
     responseType: 'blob',
+    timeout: 0,
+    // onDownloadProgress: (evt) => {
+
+    // },
     data
   })
 }
