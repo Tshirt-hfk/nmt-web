@@ -19,7 +19,9 @@
       <el-form-item label="模型">
         <el-upload
           class="upload-demo"
+          ref="upload"
           action="customize"
+          :multiple="false"
           :limit="1"
           :http-request="upload"
           :on-remove="handleRemove"
@@ -53,18 +55,20 @@ export default {
     };
   },
   methods: {
-    upload(params) {
-      const _file = params.file;
+    upload(uploader) {
+      const _file = uploader.file;
 
       // 通过 FormData 对象上传文件
       var formData = new FormData();
       formData.append("file", _file);
 
-      uploadModel(formData).then((response) => {
+      uploadModel(formData, uploader).then((response) => {
         this.form.path = response.data.file_path;
+        uploader.onSuccess();
       });
     },
     handleRemove() {
+      this.$refs.upload.abort(); //取消上传
       this.form.file = "";
     },
     handleExceed() {

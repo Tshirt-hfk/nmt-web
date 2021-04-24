@@ -8,10 +8,15 @@ export function searchModel(data) {
   })
 }
 
-export function uploadModel(data) {
+export function uploadModel(data, uploader) {
   return request({
     url: '/model/upload',
     method: 'post',
+    timeout: 0,
+    onUploadProgress: (progressEvent) => {
+      let num = progressEvent.loaded / progressEvent.total * 100 | 0;  //百分比
+      uploader.onProgress({percent: num})     //进度条
+    },
     data
   })
 }
@@ -21,6 +26,10 @@ export function downloadModel(data) {
     url: '/model/download',
     method: 'post',
     responseType: 'blob',
+    timeout: 0,
+    // onDownloadProgress: (evt) => {
+
+    // },
     data
   })
 }
