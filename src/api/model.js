@@ -42,6 +42,14 @@ export function addModel(data) {
   })
 }
 
+export function existModel(data) {
+  return request({
+    url: '/model/exist',
+    method: 'post',
+    data
+  })
+}
+
 export function getAllModel(data) {
   return request({
     url: '/model/all',
