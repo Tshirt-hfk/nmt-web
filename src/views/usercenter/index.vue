@@ -35,6 +35,9 @@ export default {
         this.$refs.form.validateField("checkPassword");
         return callback();
       }
+      if (value.length < 8 ) {
+        return callback(new Error("密码长度至少8个字符"));
+      }
       return callback();
     };
 
@@ -66,8 +69,6 @@ export default {
         if (valid) {
           let data = {};
           data[key] = value;
-          console.log(data);
-          console.log(this.$store);
           modifyInfo(data).then((response) => {
             this.$message(response.message);
             this.form.password = "";
