@@ -30,14 +30,14 @@ export default {
     var validatePass = (rule, value, callback) => {
       if (value === "") {
         return callback(new Error("请输入密码"));
+      } else if (value.length < 6 ) {
+        return callback(new Error("密码长度至少6个字符"));
       }
       if (this.form.checkPassword !== "") {
         this.$refs.form.validateField("checkPassword");
         return callback();
       }
-      if (value.length < 8 ) {
-        return callback(new Error("密码长度至少8个字符"));
-      }
+      
       return callback();
     };
 
