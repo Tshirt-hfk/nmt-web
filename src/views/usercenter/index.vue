@@ -1,84 +1,95 @@
 <template>
   <div class="app-container">
-    <el-form ref="form" :model="form" label-width="120px">
-      <el-form-item label="Activity name">
-        <el-input v-model="form.name" />
+    <el-form ref="form" :model="form" :rules="rules" label-width="120px">
+      <el-form-item label="密码" prop="password">
+        <el-input
+          type="password"
+          v-model="form.password"
+          autocomplete="off"
+        ></el-input>
       </el-form-item>
-      <el-form-item label="Activity zone">
-        <el-select v-model="form.region" placeholder="please select your zone">
-          <el-option label="Zone one" value="shanghai" />
-          <el-option label="Zone two" value="beijing" />
-        </el-select>
-      </el-form-item>
-      <el-form-item label="Activity time">
-        <el-col :span="11">
-          <el-date-picker v-model="form.date1" type="date" placeholder="Pick a date" style="width: 100%;" />
-        </el-col>
-        <el-col :span="2" class="line">-</el-col>
-        <el-col :span="11">
-          <el-time-picker v-model="form.date2" type="fixed-time" placeholder="Pick a time" style="width: 100%;" />
-        </el-col>
-      </el-form-item>
-      <el-form-item label="Instant delivery">
-        <el-switch v-model="form.delivery" />
-      </el-form-item>
-      <el-form-item label="Activity type">
-        <el-checkbox-group v-model="form.type">
-          <el-checkbox label="Online activities" name="type" />
-          <el-checkbox label="Promotion activities" name="type" />
-          <el-checkbox label="Offline activities" name="type" />
-          <el-checkbox label="Simple brand exposure" name="type" />
-        </el-checkbox-group>
-      </el-form-item>
-      <el-form-item label="Resources">
-        <el-radio-group v-model="form.resource">
-          <el-radio label="Sponsor" />
-          <el-radio label="Venue" />
-        </el-radio-group>
-      </el-form-item>
-      <el-form-item label="Activity form">
-        <el-input v-model="form.desc" type="textarea" />
-      </el-form-item>
-      <el-form-item>
-        <el-button type="primary" @click="onSubmit">Create</el-button>
-        <el-button @click="onCancel">Cancel</el-button>
+      <el-form-item label="确认密码" prop="checkPassword">
+        <el-input
+          type="password"
+          v-model="form.checkPassword"
+          autocomplete="off"
+        ></el-input>
+        <el-button type="primary" @click="onSubmit('password', form.password)"
+          >修改</el-button
+        >
       </el-form-item>
     </el-form>
   </div>
 </template>
 
 <script>
+import { modifyInfo } from "@/api/user";
+
 export default {
   data() {
+    var validatePass = (rule, value, callback) => {
+      if (value === "") {
+        return callback(new Error("请输入密码"));
+      }
+      if (this.form.checkPassword !== "") {
+        this.$refs.form.validateField("checkPassword");
+        return callback();
+      }
+      return callback();
+    };
+
+    var validatePass2 = (rule, value, callback) => {
+      if (value === "") {
+        return callback(new Error("请再次输入密码"));
+      } else if (value !== this.form.password) {
+        return callback(new Error("两次输入密码不一致!"));
+      } else {
+        return callback();
+      }
+    };
+
     return {
       form: {
-        name: '',
-        region: '',
-        date1: '',
-        date2: '',
-        delivery: false,
-        type: [],
-        resource: '',
-        desc: ''
-      }
-    }
+        password: "",
+        checkPassword: "",
+      },
+      rules: {
+        password: [{ validator: validatePass, trigger: "blur" }],
+        checkPassword: [{ validator: validatePass2, trigger: "blur" }],
+      },
+    };
   },
+  mounted() {},
   methods: {
-    onSubmit() {
-      this.$message('submit!')
+    onSubmit(key, value) {
+      this.$refs.form.validate((valid) => {
+        if (valid) {
+          let data = {};
+          data[key] = value;
+          console.log(data);
+          console.log(this.$store);
+          modifyInfo(data).then((response) => {
+            this.$message(response.message);
+            this.form.password = "";
+            this.form.checkPassword = "";
+          });
+        } else {
+          this.$message.warning(`修改失败!`);
+        }
+      });
     },
-    onCancel() {
-      this.$message({
-        message: 'cancel!',
-        type: 'warning'
-      })
-    }
-  }
-}
+  },
+};
 </script>
 
 <style scoped>
-.line{
+.el-input {
+  width: 400px;
+}
+.el-button {
+  margin-left: 30px;
+}
+.line {
   text-align: center;
 }
 </style>

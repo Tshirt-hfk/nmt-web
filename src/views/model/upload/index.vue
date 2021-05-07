@@ -129,7 +129,7 @@ export default {
             this.$router.push({ name: this.form.kind });
           });
         } else {
-          return false;
+          this.$message.warning(`上传失败!`);
         }
       });
     },

@@ -109,9 +109,9 @@ export const constantRoutes = [
     component: Layout,
     children: [
       {
-        path: 'index',
-        name: 'index',
-        component: () => import('@/views/form/index'),
+        path: 'usercenter',
+        name: 'usercenter',
+        component: () => import('@/views/usercenter/index'),
         meta: { title: '用户中心', icon: 'form' }
       }
     ]

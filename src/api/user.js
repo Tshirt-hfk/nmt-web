@@ -8,6 +8,14 @@ export function login(data) {
   })
 }
 
+export function modifyInfo(data) {
+  return request({
+    url: '/user/modify',
+    method: 'post',
+    data
+  })
+}
+
 export function getInfo(data) {
   return request({
     url: '/user/info',
@@ -22,3 +30,5 @@ export function logout() {
     method: 'post'
   })
 }
+
+
